@@ -17,6 +17,7 @@ RUN apt-get install -y nodejs \
         liblocal-lib-perl \
         libpq-dev \
         libxml2-dev \
+        wget \
         cpanminus
 
 RUN echo 'eval $( perl -Mlocal::lib )' >> ~/.bashrc && /bin/bash -c "source ~/.bashrc"
@@ -26,6 +27,5 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 
 RUN apt-get update && apt-get install yarn
 
-RUN mkdir /musicbrainz
-WORKDIR /musicbrainz
+RUN wget ftp://ftp.musicbrainz.org/pub/musicbrainz/data/sample/20190501-000001/*
 
