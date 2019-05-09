@@ -3,7 +3,6 @@ services:
 
   redis:
     image: redis
-    container_name: redis-server
     ports:
       - 6379
     networks:
@@ -27,9 +26,9 @@ services:
     links:
       - db
       - redis
-    command: bash -c "cd musicbrainz && cpanm --installdeps --notest . && ./script/compile_resources.sh && plackup -Ilib -r"
-    environment:
-      - REDIS_URL=redis://redis-server
+    command: bash -c "cd musicbrainz && cpanm --installdeps --notest . && ./script/compile_resources.sh && ./admin/InitDb.pl --createdb --clean && plackup -Ilib -r"
+    networks:
+      - musicbrainz
     ports:
       - "5000:5000"
     depends_on:
